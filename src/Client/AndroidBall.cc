@@ -29,7 +29,7 @@ bool AndroidBall::init()
 
     btnOverlay = CCSprite::create("qolmodButtonOverlay.png");
 
-    btn = CCSprite::create("qolmodButtonBG.png"_spr);
+    btn = CCSprite::create("qolmodButtonBG.png");
     //btn->addChildAtPosition(btnOverlay, Anchor::Center);
     menu->addChild(btn);
     
