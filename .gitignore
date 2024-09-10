@@ -1,0 +1,8 @@
+.cache
+.vscode
+build
+IPA/*
+auby2/bin/GeometryJump
+auby2/bin/_GeometryJump.*
+generated*
+.DS_Store

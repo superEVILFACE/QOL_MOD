@@ -1,0 +1,60 @@
+name: Build
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: "recursive"
+
+      - name: Check Xcode Version
+        run: /usr/bin/xcodebuild -version
+
+      - name: Get IPA
+        run: wget https://files.catbox.moe/vqtqls.zip -P ${{github.workspace}}/ && unzip ${{github.workspace}}/vqtqls.zip -d ${{github.workspace}}/ && rm ${{github.workspace}}/vqtqls.zip
+
+      - name: Run Govnython Scripts
+        run: |
+          git clone https://github.com/CallocGD/PyBroma.git --recursive
+          cd PyBroma
+          sed -i -e 's/--std:c++17/--std=c++17/g' setup.py
+          sed -i -e 's/\/O2/-O2/g' setup.py
+          export LDFLAGS="-L$(brew --prefix openssl)/lib"
+          export CPPFLAGS="-I$(brew --prefix openssl)/include"
+          python3 -m venv hueta
+          source hueta/bin/activate
+          python3 -m pip install setuptools wheel cython keystone-engine
+          wget https://pypi.python.org/packages/source/c/capstone/capstone-5.0.1.tar.gz
+          tar -xf capstone-5.0.1.tar.gz
+          cd capstone-5.0.1
+          python3 setup.py install
+          cd ..
+          python3 setup.py build_ext --inplace
+          python3 -m pip install -U .
+          python3 ${{github.workspace}}/auby2/hooks.py
+          python3 ${{github.workspace}}/auby2/bindings.py
+
+      - name: Configure CMake
+        run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build ${{github.workspace}}/build
+
+      - name: Make IPA
+        run: mv ${{github.workspace}}/auby2/bin/GeometryJump ${{github.workspace}}/Payload/GeometryJump.app/ && cd ${{github.workspace}} && zip -r GeometryJump.ipa Payload
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: GD_MOD${{github.run_id}}
+          path: |
+            ${{github.workspace}}/build/libgdTest.dylib
+            ${{github.workspace}}/GeometryJump.ipa
