@@ -2,9 +2,13 @@
 
 #include <auby.hh>
 
-class AndroidBall : public CCLayer
+class AndroidBall
 {
     public:
+        static AndroidBall* get();
+
+        void show(CCLayer* layer);
+        
         static inline bool hasPos = false;
         static inline CCPoint position = ccp(32, CCDirector::sharedDirector()->getWinSize().height / 2);
         static inline AndroidBall* instance = nullptr;
@@ -17,17 +21,9 @@ class AndroidBall : public CCLayer
         CCLabelBMFont* l;
         CCMenu* menu;
 
-        CREATE_FUNC(AndroidBall);
-        static AndroidBall* get();
-
-        virtual bool init();
-
-        virtual void update(float dt);
-
+        AndroidBall();
         ~AndroidBall();
-};
-
-/*class $modify (QOLModTouchDispatcher, CCTouchDispatcher)
-{
-    void touches(CCSet* touches, CCEvent* event, unsigned int type);
-};*/
+        
+    private:
+        CCLayer* m_layer = nullptr;
+}
