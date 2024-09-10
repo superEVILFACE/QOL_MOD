@@ -52,8 +52,8 @@ void* $(AppDelegate::willSwitchToScene)(AppDelegate* self, CCScene* newScene)
 {
     $orig(self, newScene);
     
-    //if (!newScene)
-    //    return;
+    if (!newScene)
+        return nullptr;
 
     //if (cocos_utils::getChildOfType<LoadingLayer>(newScene, 0))
     //    return; // fixes texture ldr
