@@ -1,25 +1,61 @@
 #include "AndroidBall.hh"
 
-AndroidBall& AndroidBall::get()
+AndroidBall* AndroidBall::get()
 {
-    static auto androidBall = AndroidBall();
-    return androidBall;
+    return instance;
 }
 
-void AndroidBall::show(CCNode* layer) 
+bool AndroidBall::init()
 {
-    layer->addChild(m_layer, 69420 - 1);
-}
+    if (!CCLayer::init())
+        return false;
 
-AndroidBall::AndroidBall()
-{
-    m_layer = CCLayer::create();
-    m_layer->setTouchEnabled(true);
+    this->setTouchEnabled(true);
 
     highest++;
-    m_layer->setTag(highest);
+    this->setTag(highest);
+    instance = this;
 
-    m_layer->setPosition(CCDirector::sharedDirector()->getWinSize() / 2);
+    //mod = Client::GetModule("hide-btn");
+    //mod2 = Client::GetModule("instant-fade");
+    //canDrag = Client::GetModule("allow-dragging");
+
+    menu = CCMenu::create();
+    menu->setPosition(position);
+    menu->setContentSize(ccp(0, 0));
+
+    //l = CCLabelBMFont::create(">_", "bigFont.fnt");
+    //l->setAnchorPoint(ccp(0.5f, 0.35f));
+
+    btnOverlay = CCSprite::create("qolmodButtonOverlay.png");
+
+    btn = CCSprite::create("qolmodButtonBG.png"_spr);
+    //btn->addChildAtPosition(btnOverlay, Anchor::Center);
+    menu->addChild(btn);
+    
+    this->addChild(menu);
+    this->setZOrder(69420 - 1);
+    this->scheduleUpdate();
+
+    //UpdateVisible(true);
+
+    return true;
+}
+
+AndroidBall::~AndroidBall()
+{
+    instance = nullptr;
+}
+
+float AndroidBall::clampf(float v, float min, float max)
+{
+    if (v < min)
+        v = min;
+
+    if (v > max)
+        v = max;
+
+    return v;
 }
 
 void* $(AppDelegate::willSwitchToScene)(AppDelegate* self, CCScene* newScene)
@@ -29,5 +65,5 @@ void* $(AppDelegate::willSwitchToScene)(AppDelegate* self, CCScene* newScene)
     if (!newScene)
         return nullptr;
 
-    AndroidBall::get().show(newScene);
+    newScene->addChild(AndroidBall::create());
 }
