@@ -48,6 +48,11 @@ void AndroidBall::update(float dt)
     //UpdateVisible(false);
 }
 
+AndroidBall::~AndroidBall()
+{
+    instance = nullptr;
+}
+
 void* $(AppDelegate::willSwitchToScene)(AppDelegate* self, CCScene* newScene)
 {
     $orig(self, newScene);
