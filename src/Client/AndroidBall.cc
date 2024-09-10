@@ -1,11 +1,12 @@
 #include "AndroidBall.hh"
 
-static AndroidBall* AndroidBall::get()
+AndroidBall* AndroidBall::get()
 {
-    return instance;
+    static auto androidBall = AndroidBall();
+    return androidBall;
 }
 
-void AndroidBall::show(CCLayer* layer) 
+void AndroidBall::show(CCNode* layer) 
 {
     layer->addChild(m_layer, 69420 - 1);
 }
@@ -17,7 +18,6 @@ AndroidBall::AndroidBall()
 
     highest++;
     m_layer->setTag(highest);
-    instance = m_layer;
 
     m_layer->setPosition(CCDirector::sharedDirector()->getWinSize() / 2);
 }
