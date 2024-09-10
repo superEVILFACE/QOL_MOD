@@ -17,28 +17,12 @@ class AndroidBall : public CCLayer
         CCLabelBMFont* l;
         CCMenu* menu;
 
-        //Module* mod = nullptr; TODO
-        //Module* mod2 = nullptr; TODO
-        //Module* canDrag = nullptr; TODO
-
         CREATE_FUNC(AndroidBall);
         static AndroidBall* get();
 
-        //bool isColonThreeEnabled(); TODO
-        //void setColonThreeEnabled(); TODO
-
-        //void onOpenMenu(); TODO
-
         virtual bool init();
 
-        //bool _ccTouchBegan(CCTouch* touch, CCEvent* event); TODO
-        //bool _ccTouchEnded(CCTouch* touch, CCEvent* event); TODO
-        //bool _ccTouchMoved(CCTouch* touch, CCEvent* event); TODO
-
         virtual void update(float dt);
-        //static float clampf(float v, float min, float max); TODO
-
-        //void UpdateVisible(bool i); TODO
 
         ~AndroidBall();
 };
