@@ -20,7 +20,7 @@ else()
   set(CMAKE_OSX_SYSROOT ${IOS_SDK})
 endif()
 
-add_subdirectory(backend)
+add_subdirectory(auby2)
 
 file(GLOB_RECURSE PROJ_SRC src/*.cc)
 add_library(QOL SHARED
@@ -28,7 +28,7 @@ add_library(QOL SHARED
 )
 
 target_include_directories(QOL PUBLIC src)
-target_link_libraries(QOL PUBLIC backend)
+target_link_libraries(QOL PUBLIC auby2)
 
 if(CATALYST)
   add_custom_command(TARGET QOL POST_BUILD
