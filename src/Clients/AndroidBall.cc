@@ -1,5 +1,4 @@
 #include "AndroidBall.hh"
-#include "./utils.hh"
 
 AndroidBall* AndroidBall::get()
 {
@@ -56,16 +55,14 @@ void* $(AppDelegate::willSwitchToScene)(AppDelegate* self, CCScene* newScene)
     if (!newScene)
         return;
 
-    if (cocos_utils::getChildOfType<LoadingLayer>(newScene, 0))
-        return; // fixes texture ldr
+    //if (cocos_utils::getChildOfType<LoadingLayer>(newScene, 0))
+    //    return; // fixes texture ldr
 
-    if (auto ball = cocos_utils::getChildOfType<AndroidBall>(newScene, 0))
-        ball->removeFromParent();
+    //if (auto ball = cocos_utils::getChildOfType<AndroidBall>(newScene, 0))
+    //    ball->removeFromParent();
 
     newScene->addChild(AndroidBall::create());
 
-    if (auto shop = cocos_utils::getChildOfType<GJShopLayer>(newScene, 0))
-    {
-        //handleTouchPriority(shop);
-    }
+    //if (auto shop = cocos_utils::getChildOfType<GJShopLayer>(newScene, 0))
+    //    handleTouchPriority(shop);
 }
