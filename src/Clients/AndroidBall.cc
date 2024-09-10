@@ -1,4 +1,5 @@
 #include "AndroidBall.hh"
+#include "./utils.hh"
 
 AndroidBall* AndroidBall::get()
 {
@@ -31,7 +32,7 @@ bool AndroidBall::init()
     btnOverlay = CCSprite::create(/*isColonThreeEnabled() ? "QOL_resources/sprites/qolmodButtonOverlaycolonthree.png" : */"QOL_resources/sprites/qolmodButtonOverlay.png");
 
     btn = CCSprite::create("QOL_resources/sprites/qolmodButtonBG.png");
-    btn->addChildAtPosition(btnOverlay, Anchor::Center);
+    //btn->addChildAtPosition(btnOverlay, Anchor::Center);
     menu->addChild(btn);
     
     this->addChild(menu);
@@ -48,23 +49,23 @@ void AndroidBall::update(float dt)
     //UpdateVisible(false);
 }
 
-void $(AppDelegate::willSwitchToScene)(AppDelegate* self, CCScene* newScene)
+void* $(AppDelegate::willSwitchToScene)(AppDelegate* self, CCScene* newScene)
 {
     $orig(self, newScene);
     
     if (!newScene)
         return;
 
-    if (getChildOfType<LoadingLayer>(newScene, 0))
+    if (cocos_utils::getChildOfType<LoadingLayer>(newScene, 0))
         return; // fixes texture ldr
 
-    if (auto ball = getChildOfType<AndroidBall>(newScene, 0))
+    if (auto ball = cocos_utils::getChildOfType<AndroidBall>(newScene, 0))
         ball->removeFromParent();
 
     newScene->addChild(AndroidBall::create());
 
-    if (auto shop = getChildOfType<GJShopLayer>(newScene, 0))
+    if (auto shop = cocos_utils::getChildOfType<GJShopLayer>(newScene, 0))
     {
-        handleTouchPriority(shop);
+        //handleTouchPriority(shop);
     }
 }
