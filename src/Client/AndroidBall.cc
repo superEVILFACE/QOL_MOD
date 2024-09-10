@@ -29,5 +29,5 @@ void* $(AppDelegate::willSwitchToScene)(AppDelegate* self, CCScene* newScene)
     if (!newScene)
         return nullptr;
 
-    AndroidBall::get()->show(newScene);
+    AndroidBall::get().show(newScene);
 }
