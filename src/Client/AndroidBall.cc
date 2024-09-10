@@ -1,6 +1,6 @@
 #include "AndroidBall.hh"
 
-AndroidBall* AndroidBall::get()
+AndroidBall& AndroidBall::get()
 {
     static auto androidBall = AndroidBall();
     return androidBall;
@@ -20,11 +20,6 @@ AndroidBall::AndroidBall()
     m_layer->setTag(highest);
 
     m_layer->setPosition(CCDirector::sharedDirector()->getWinSize() / 2);
-}
-
-AndroidBall::~AndroidBall()
-{
-    instance = nullptr;
 }
 
 void* $(AppDelegate::willSwitchToScene)(AppDelegate* self, CCScene* newScene)

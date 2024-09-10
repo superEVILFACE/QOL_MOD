@@ -5,7 +5,7 @@
 class AndroidBall
 {
     public:
-        static AndroidBall* get();
+        static AndroidBall& get();
 
         void show(CCNode* layer);
 
@@ -21,7 +21,6 @@ class AndroidBall
         CCMenu* menu;
 
         AndroidBall();
-        ~AndroidBall();
         
     private:
         CCLayer* m_layer = nullptr;
