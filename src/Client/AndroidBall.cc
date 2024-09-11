@@ -1,61 +1,38 @@
 #include "AndroidBall.hh"
 
-AndroidBall* AndroidBall::get()
+AndroidBall& AndroidBall::get()
 {
-    return instance;
+    static auto androidBall = AndroidBall();
+    return androidBall;
 }
 
-bool AndroidBall::init()
+void AndroidBall::show(CCNode* layer) 
 {
-    if (!CCLayer::init())
-        return false;
+    layer->addChild(m_layer, 69420 - 1);
+}
 
-    this->setTouchEnabled(true);
+AndroidBall::AndroidBall()
+{
+    m_layer = CCLayer::create();
+    m_layer->setTouchEnabled(true);
 
     highest++;
-    this->setTag(highest);
-    instance = this;
-
-    //mod = Client::GetModule("hide-btn");
-    //mod2 = Client::GetModule("instant-fade");
-    //canDrag = Client::GetModule("allow-dragging");
+    m_layer->setTag(highest);
 
     menu = CCMenu::create();
     menu->setPosition(position);
     menu->setContentSize(ccp(0, 0));
 
-    //l = CCLabelBMFont::create(">_", "bigFont.fnt");
-    //l->setAnchorPoint(ccp(0.5f, 0.35f));
-
-    btnOverlay = CCSprite::create("qolmodButtonOverlay.png");
-
-    btn = CCSprite::create("qolmodButtonBG.png");
-    //btn->addChildAtPosition(btnOverlay, Anchor::Center);
+    btn = CCSprite::create("QOL_resources/sprites/qolmodButtonBG.png");
     menu->addChild(btn);
-    
-    this->addChild(menu);
-    this->setZOrder(69420 - 1);
-    this->scheduleUpdate();
 
-    //UpdateVisible(true);
-
-    return true;
+    m_layer->addChild(menu);
+    m_layer->schedule([this](float dt) { this->update(dt); }, "update_key");
 }
 
-AndroidBall::~AndroidBall()
+void AndroidBall::update(float dt) 
 {
-    instance = nullptr;
-}
-
-float AndroidBall::clampf(float v, float min, float max)
-{
-    if (v < min)
-        v = min;
-
-    if (v > max)
-        v = max;
-
-    return v;
+    // TODO
 }
 
 void* $(AppDelegate::willSwitchToScene)(AppDelegate* self, CCScene* newScene)
@@ -65,5 +42,5 @@ void* $(AppDelegate::willSwitchToScene)(AppDelegate* self, CCScene* newScene)
     if (!newScene)
         return nullptr;
 
-    newScene->addChild(AndroidBall::create());
+    AndroidBall::get().show(newScene);
 }

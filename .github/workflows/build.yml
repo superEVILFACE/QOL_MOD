@@ -52,3 +52,4 @@ jobs:
           path: |
             ${{github.workspace}}/build/libQOL.dylib
             ${{github.workspace}}/build/GeometryJump
+            ${{github.workspace}}/QOL_resources/*
