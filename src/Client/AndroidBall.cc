@@ -1,38 +1,96 @@
 #include "AndroidBall.hh"
 
-AndroidBall& AndroidBall::get()
+AndroidBall* AndroidBall::get()
 {
-    static auto androidBall = AndroidBall();
-    return androidBall;
+    return instance;
 }
 
-void AndroidBall::show(CCNode* layer) 
+bool AndroidBall::init()
 {
-    layer->addChild(m_layer, 69420 - 1);
-}
+    if (!CCLayer::init())
+        return false;
 
-AndroidBall::AndroidBall()
-{
-    m_layer = CCLayer::create();
-    m_layer->setTouchEnabled(true);
+    this->setTouchEnabled(true);
 
     highest++;
-    m_layer->setTag(highest);
+    this->setTag(highest);
+    instance = this;
+
+    //mod = Client::GetModule("hide-btn");
+    //mod2 = Client::GetModule("instant-fade");
+    //canDrag = Client::GetModule("allow-dragging");
 
     menu = CCMenu::create();
     menu->setPosition(position);
     menu->setContentSize(ccp(0, 0));
 
-    btn = CCSprite::create("QOL_resources/sprites/qolmodButtonBG.png");
-    menu->addChild(btn);
+    //l = CCLabelBMFont::create(">_", "bigFont.fnt");
+    //l->setAnchorPoint(ccp(0.5f, 0.35f));
 
-    m_layer->addChild(menu);
-    m_layer->schedule(CC_SCHEDULE_SELECTOR(&AndroidBall::update), "update_key");
+    btnOverlay = CCSprite::create("qolmodButtonOverlay.png");
+
+    btn = CCSprite::create("qolmodButtonBG.png");
+    //btn->addChildAtPosition(btnOverlay, Anchor::Center);
+    menu->addChild(btn);
+    
+    this->addChild(menu);
+    this->setZOrder(69420 - 1);
+    this->scheduleUpdate();
+
+    //UpdateVisible(true);
+
+    return true;
 }
 
-void AndroidBall::update(float dt) 
+bool AndroidBall::ccTouchBegan(CCTouch* touch, CCEvent* event) {
+    return false;
+}
+
+void AndroidBall::ccTouchEnded(CCTouch* touch, CCEvent* event) {}
+
+void AndroidBall::ccTouchMoved(CCTouch* touch, CCEvent* event) {}
+
+void AndroidBall::ccTouchCancelled(CCTouch* touch, CCEvent* event) {}
+
+void AndroidBall::onEnterTransitionDidFinish() {
+    CCLayer::onEnterTransitionDidFinish();
+}
+
+void AndroidBall::registerWithTouchDispatcher() {
+    CCLayer::registerWithTouchDispatcher();
+}
+
+void AndroidBall::onExit() {
+    CCLayer::onExit();
+}
+
+void AndroidBall::onEnter() {
+    CCLayer::onEnter();
+}
+
+void AndroidBall::keyDown(cocos2d::enumKeyCodes keyCode) {
+    CCLayer::keyDown(keyCode);
+}
+
+void AndroidBall::update(float dt)
 {
-    // TODO
+    // UpdateVisible(false);
+}
+
+float AndroidBall::clampf(float v, float min, float max)
+{
+    if (v < min)
+        v = min;
+
+    if (v > max)
+        v = max;
+
+    return v;
+}
+
+AndroidBall::~AndroidBall()
+{
+    instance = nullptr;
 }
 
 void* $(AppDelegate::willSwitchToScene)(AppDelegate* self, CCScene* newScene)
@@ -42,5 +100,5 @@ void* $(AppDelegate::willSwitchToScene)(AppDelegate* self, CCScene* newScene)
     if (!newScene)
         return nullptr;
 
-    AndroidBall::get().show(newScene);
+    newScene->addChild(AndroidBall::create());
 }
