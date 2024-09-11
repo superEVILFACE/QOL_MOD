@@ -27,7 +27,7 @@ AndroidBall::AndroidBall()
     menu->addChild(btn);
 
     m_layer->addChild(menu);
-    m_layer->schedule([this](float dt) { this->update(dt); }, "update_key");
+    m_layer->schedule([&](float dt) { this->update(dt); }, "update_key");
 }
 
 void AndroidBall::update(float dt) 
