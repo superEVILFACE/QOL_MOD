@@ -32,8 +32,14 @@ class AndroidBall : public CCLayer
         virtual bool init();
 
         bool ccTouchBegan(CCTouch* touch, CCEvent* event);
-        bool ccTouchEnded(CCTouch* touch, CCEvent* event);
-        bool ccTouchMoved(CCTouch* touch, CCEvent* event);
+        void ccTouchEnded(CCTouch* touch, CCEvent* event);
+        void ccTouchMoved(CCTouch* touch, CCEvent* event);
+        void ccTouchCancelled(CCTouch* touch, CCEvent* event);
+        void onEnterTransitionDidFinish();
+        void registerWithTouchDispatcher();
+        void onExit();
+        void onEnter();
+        void keyDown(cococs2d::enumKeyCodes keyCode);
 
         virtual void update(float dt);
         static float clampf(float v, float min, float max);

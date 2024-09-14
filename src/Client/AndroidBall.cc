@@ -42,15 +42,25 @@ bool AndroidBall::init()
     return true;
 }
 
-bool AndroidBall::ccTouchBegan(CCTouch* touch, CCEvent* event) {
-    return false;
+bool AndroidBall::ccTouchBegan(CCTouch* touch, CCEvent* event) 
+{
+    return CCLayer::ccTouchBegan(touch, event);
 }
 
-void AndroidBall::ccTouchEnded(CCTouch* touch, CCEvent* event) {}
+void AndroidBall::ccTouchEnded(CCTouch* touch, CCEvent* event) 
+{
+    CCLayer::ccTouchEnded(touch, event);
+}
 
-void AndroidBall::ccTouchMoved(CCTouch* touch, CCEvent* event) {}
+void AndroidBall::ccTouchMoved(CCTouch* touch, CCEvent* event) 
+{
+    CCLayer::ccTouchMoved(touch, event);
+}
 
-void AndroidBall::ccTouchCancelled(CCTouch* touch, CCEvent* event) {}
+void AndroidBall::ccTouchCancelled(CCTouch* touch, CCEvent* event) 
+{   CCLayer::ccTouchCancelled(touch, event);
+
+}
 
 void AndroidBall::onEnterTransitionDidFinish() {
     CCLayer::onEnterTransitionDidFinish();
