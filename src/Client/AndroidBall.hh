@@ -39,7 +39,7 @@ class AndroidBall : public CCLayer
         void registerWithTouchDispatcher();
         void onExit();
         void onEnter();
-        void keyDown(cococs2d::enumKeyCodes keyCode);
+        void keyDown(cocos2d::enumKeyCodes keyCode);
 
         virtual void update(float dt);
         static float clampf(float v, float min, float max);
